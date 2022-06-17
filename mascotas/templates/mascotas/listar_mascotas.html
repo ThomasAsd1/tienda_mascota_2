@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Mascotas</h2>
+    <h2><a href="{% url 'home' %}">Inicio</a></h2>
+
+    <div class="mascotas">
+        {%for m in mascotas %}
+        <div>
+            <p>raza:{{m.raza}}</p>
+            <p>estatura:{{m.estatura}}</p>
+            <p>peso:{{m.peso}}</p>
+            <p>annos_de_vida:{{m.annos_de_vida}}</p>
+            <p>precio:${{m.precio}}</p>
+        </div>
+        <a href="{% url 'editar_raza_id' m.id %}">Modificar</a> 
+        <a href="{% url 'elimina_raza_id' m.id %}">Eliminar</a>
+        {%endfor%}
+    </div>
+    
+</body>
+</html>

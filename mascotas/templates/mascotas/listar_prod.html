@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Productos</h2>
+    <h2><a href="{% url 'home' %}">Inicio</a></h2>
+    <div class="productos">
+        {%for p in productos %}
+        <div>
+            <p>codigo:{{p.codigo}}</p>
+            <p>nombre:{{p.nombre}}</p>
+            <p>cantidad:{{p.cantidad}}</p>
+            <p>precio:${{p.precio}}</p>
+        </div>
+        <a href="{% url 'editar_prod_id' p.id %}">Modificar</a> 
+        <a href="{% url 'elimina_prod_id' p.id %}">Eliminar</a>
+
+        <hr> {%endfor%}
+    </div>
+
+</body>
+
+</html>

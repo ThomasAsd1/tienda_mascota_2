@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Mascotas</h2>
+    <h2><a href="{% url 'home' %}">Inicio</a></h2>
+
+    <div class="clientes">
+        {%for c in clientes %}
+        <div>
+            <p>rut:{{c.rut}}</p>
+            <p>nombre:{{c.nombre}}</p>
+            <p>edad:{{c.edad}}</p>
+            <p>correo:{{c.correo}}</p>
+            <p>telefono:{{c.telefono}}</p>
+        </div>
+        <a href="{% url 'editar_clie_id' c.id %}">Modificar</a> 
+        <a href="{% url 'elimina_clie_id' c.id %}">Eliminar</a>
+        {%endfor%}
+    </div>
+    
+</body>
+</html>
