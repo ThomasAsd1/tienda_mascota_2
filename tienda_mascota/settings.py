@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registro',
     'mascotas',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

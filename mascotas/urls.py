@@ -1,8 +1,10 @@
 from django.urls import path, include,re_path
 from . import views
-
+from rest_framework.urlpatterns import format_suffix_patterns
+from mascotas import views
 
 urlpatterns = [
+    
     path('',views.home,name='home'),
     path('',views.cli,name='clie'),
     
@@ -24,4 +26,9 @@ urlpatterns = [
     path('eliminar/<id>/',views.eliminar,name='elimina_raza_id'),
     path('eliminar_prod/<id>/',views.eliminar_prod,name='elimina_prod_id'),
     path('eliminar_clie/<id>/',views.eliminar_clie,name='elimina_clie_id'),
+    
+    # api
+    path('mascotas/',  views.mascota_collection , name='mascota_collection'),
+    path('mascotas/<int:pk>/', views.mascota_element ,name='mascota_element')
+
 ]
