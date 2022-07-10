@@ -6,19 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <a href="{% url 'listar_prod' %}">Ver lista de productos</a>    
-    <a href="{% url 'prod' %}">Agregar un producto</a>
+    <div class="container">
+        <div class="col-lg-8 col-xs-12 col-md-8">
+        <a href="{% url 'listar_prod' %}"  class="col-lg-6 col-xs-12">Ver lista de productos</a>    
+        <a href="{% url 'prod' %}"  class="col-lg-6 col-xs-12">Agregar un producto</a>
+        </div>
 
-    <a href="{% url 'listM' %}">Ver lista de mascotas</a>
-    <a href="{% url 'ag_mascota' %}">Agregar mascotas</a>
+        <div class="col-lg-8 col-xs-12 col-md-8">
+        <a href="{% url 'listM' %}" class="col-lg-6 col-xs-12">Ver lista de mascotas</a>
+        <a href="{% url 'ag_mascota' %}"  class="col-lg-6 col-xs-12">Agregar mascotas</a>
+        </div>
 
-    <a href="{% url 'clie_list' %}">Ver lista de clientes</a>
-    <a href="{% url 'clie' %}">Agregar un cliente</a>
-    
-    <Br>Datos curiosos sobre gatos: {{api}}
+        <div class="col-lg-8 col-xs-12 col-md-8">
+        <a href="{% url 'clie_list' %}"  class="col-lg-6 col-xs-12">Ver lista de clientes</a>
+        <a href="{% url 'clie' %}"  class="col-lg-6 col-xs-12">Agregar un cliente</a>
+        </div>
+
+        <div class="col-lg-8 col-xs-12 col-md-8">
+        <Br>Datos curiosos sobre gatos: {{api}}
+        </div>
+    </div>
 </body>
 
 </html>
