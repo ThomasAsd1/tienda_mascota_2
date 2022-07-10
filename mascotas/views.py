@@ -7,6 +7,7 @@ from .forms import mascotasForms,productosForms,clienteForms
 # las importaciones para la API 
 from rest_framework import generics
 from .serializers import mascotaSerializer
+from .serializers import productoSerializer
 #------------- importacines API ---------------------
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -16,7 +17,65 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import status
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+from django.conf import settings
+import requests
+# from django.contrib.auth.models import User
 
+# @receiver(post_save, sender=User)
+# def create_auth_token(sender, instance=None, created=False, **kwargs):
+#     if created:
+#         Token.objects.create(user=instance)
+        
+# Este código se activa cada vez que se 
+# crea un nuevo usuario y se guarda en la base de datos.
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
+#---------------------get, post, put, deletede de PRODUCTO -------------------------------------
+@api_view(['GET', 'POST'])
+def producto_collection(request):
+    if request.method == 'GET':
+        productos = producto.objects.all()
+        serializer = productoSerializer(productos, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = productoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # Si el proceso de deserialización funciona, devolvemos una respuesta con un código 201 (creado
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # si falla el proceso de deserialización, devolvemos una respuesta 400
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def producto_element(request, pk):
+    Producto = get_object_or_404(producto, id=pk)
+
+    if request.method == 'GET':
+        serializer = productoSerializer(Producto)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        Producto.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT': 
+        producto_new = JSONParser().parse(request) 
+        serializer = productoSerializer(Producto, data=producto_new) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+#---------------------get, post, put, deletede de MASCOTA -------------------------------------
 @api_view(['GET', 'POST'])
 def mascota_collection(request):
     if request.method == 'GET':
@@ -50,11 +109,17 @@ def mascota_element(request, pk):
             serializer.save() 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#-----------------
 
 
 #------Codigo de las mascotas.................................
+
 def home(request):
-    return render(request, "mascotas/index_base.html")
+    url='https://meowfacts.herokuapp.com/'
+    var_url=requests.get(url).json()
+    context={"api":var_url["data"]}
+    return render(request, "mascotas/index_base.html", context)
+
 
 def cli(request):
     return render(request, "mascotas/listar_clie.html")

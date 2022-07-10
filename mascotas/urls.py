@@ -2,6 +2,7 @@ from django.urls import path, include,re_path
 from . import views
 from rest_framework.urlpatterns import format_suffix_patterns
 from mascotas import views
+from rest_framework.authtoken.views import obtain_auth_token  
 
 urlpatterns = [
     
@@ -29,6 +30,13 @@ urlpatterns = [
     
     # api
     path('mascotas/',  views.mascota_collection , name='mascota_collection'),
-    path('mascotas/<int:pk>/', views.mascota_element ,name='mascota_element')
+    path('mascotas/<int:pk>/', views.mascota_element ,name='mascota_element'),
+    
+    # api producto
+    path('productos/',  views.producto_collection , name='producto_collection'),
+    path('productos/<int:pk>/', views.producto_element ,name='producto_element'),
+    
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth')
+
 
 ]
